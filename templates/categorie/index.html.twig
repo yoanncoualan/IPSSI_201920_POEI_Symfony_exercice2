@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <h1>Accueil</h1>
+
+    <p>Il y a {{series|length}} <a href="{{path('series')}}">séries</a></p>
+    <p>Il y a {{categories|length}} catégories</p>
+    <p>{{ 'categorie.nb'|trans({'nb': categories|length}) }}</p>
+
+    {% if categories is not empty %}
+        <h2>{{ 'categorie.title'|trans }}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Nb de séries</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                    <tr>
+                        <td>   
+                            <a href="{{ path( 'categorie_edit', {'id': categorie.id} ) }}">
+                                {{categorie.nom}}
+                            </a>
+                        </td>
+                        <td>{{categorie.series|length}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h2>Ajouter une catégorie</h2>
+    {{form(ajout_categorie)}}
+
+{% endblock %}

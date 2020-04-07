@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{serie.nom}}{% endblock %}
+
+{% block body %}
+	<h1>{{serie.nom}}</h1>
+	<p>
+		{{ serie.debut|date('Y') }} - 
+		{% if serie.fin is null %}
+			en cours
+		{% else %}
+			{{serie.fin|date('Y')}}
+		{% endif %}
+	</p>
+	{% if serie.affiche is not empty %}
+		<img src="{{asset('uploads/'~ serie.affiche)}}" style="max-width: 400px;">
+	{% endif %}
+	<p>{{serie.nbSaisons}} saisons</p>
+	{% if serie.categorie is not null %}
+		<p>{{serie.categorie}}</p>
+	{% endif %}
+
+	<a href="{{path('serie_delete', {'id':serie.id})}}" class="btn btn-danger">X</a>
+
+	<h2>Modifier la série</h2>
+	{{form(serie_edit)}}
+{% endblock %}

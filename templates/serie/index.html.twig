@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Séries{% endblock %}
+
+{% block body %}
+
+    <h1>Liste des séries</h1>
+
+    {% if series is not empty %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Affiche</th>
+                    <th>Nb saisons</th>
+                    <th>Catégorie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for serie in series %}
+                    <tr>
+                        <td>
+                            <a href="{{path('serie_edit', {'id': serie.id})}}">
+                                {{serie.nom}}
+                            </a>
+                        </td>
+                        <td>{{serie.debut|date('Y')}}</td>
+                        <td>{{serie.fin|date('Y')}}</td>
+                        <td>
+                            {% if serie.affiche is not empty %}
+                                <img src="{{ asset('uploads/'~ serie.affiche) }}" style="max-width: 200px;">
+                            {% endif %}
+                        </td>
+                        <td>{{serie.nbSaisons}}</td>
+                        <td>{{serie.categorie}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        <table>
+    {% else %}
+        <p>Il n'y a aucune série</p>
+    {% endif %}
+
+    <h2>Ajouter une série</h2>
+    {{form(ajout_serie)}}
+
+{% endblock %}
